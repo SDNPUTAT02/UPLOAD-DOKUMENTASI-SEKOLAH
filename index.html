@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Aplikasi Dokumentasi Sekolah</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div class="login-box" id="loginBox">
+  <h2>🔐 LOGIN ADMIN</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Masuk</button>
+  <p id="loginStatus"></p>
+</div>
+
+<!-- ================= APP ================= -->
+<div class="app hidden" id="app">
+
+<header class="header">
+  <img src="logoputat2.jpeg" class="logo">
+  <h2>APLIKASI DOKUMENTASI SEKOLAH</h2>
+  <h3>SD NEGERI PUTAT 02</h3>
+</header>
+
+<!-- ================= DASHBOARD ================= -->
+<section class="dashboard">
+  <div class="box">
+    📸 Foto<br>
+    <span id="totalFoto">0</span>
+  </div>
+  <div class="box">
+    📁 File<br>
+    <span id="totalFile">0</span>
+  </div>
+</section>
+
+
+
+<!-- ================= MENU ================= -->
+<nav class="menu">
+  <button onclick="showPage('ekstra')">EKSTRA</button>
+  <button onclick="showPage('kegiatan')">KEGIATAN</button>
+  <button onclick="showPage('ptk')">PTK</button>
+  <button onclick="window.location='halaman2.html'">📂 RIWAYAT</button>
+  <button onclick="logout()">LOGOUT</button>
+</nav>
+
+<!-- ================= EKSTRA ================= -->
+<section class="page" id="ekstra">
+  <h3>📸 FOTO EKSTRA</h3>
+
+  <select id="kategoriEkstra">
+    <option>Tari</option>
+    <option>Pramuka</option>
+    <option>Hadroh</option>
+  </select>
+
+  <input type="file" id="fileEkstra" accept="image/*" onchange="previewFoto(event,'previewEkstra')">
+
+  <button onclick="openCamera('cameraEkstra')">📷 Buka Kamera</button>
+
+  <div class="camera-box">
+    <video id="cameraEkstra" autoplay playsinline muted></video>
+  </div>
+
+  <button onclick="takePhoto('cameraEkstra','previewEkstra')">📸 Ambil Foto</button>
+
+  <img id="previewEkstra" class="preview">
+
+  <button onclick="uploadDrive('Ekstra','fileEkstra','previewEkstra','statusEkstra')">⬆ Upload</button>
+
+  <p id="statusEkstra"></p>
+
+  <ul id="galeriEkstra" class="file-list"></ul>
+</section>
+
+<!-- ================= KEGIATAN ================= -->
+<section class="page hidden" id="kegiatan">
+  <h3>🎉 FOTO KEGIATAN</h3>
+
+  <input type="text" id="namaKegiatan" placeholder="Nama kegiatan">
+
+  <input type="file" id="fileKegiatan" accept="image/*" onchange="previewFoto(event,'previewKegiatan')">
+
+  <button onclick="openCamera('cameraKegiatan')">📷 Buka Kamera</button>
+
+  <div class="camera-box">
+    <video id="cameraKegiatan" autoplay playsinline muted></video>
+  </div>
+
+  <button onclick="takePhoto('cameraKegiatan','previewKegiatan')">📸 Ambil Foto</button>
+
+  <img id="previewKegiatan" class="preview">
+
+  <button onclick="uploadDrive('Kegiatan','fileKegiatan','previewKegiatan','statusKegiatan','namaKegiatan')">⬆ Upload</button>
+
+  <p id="statusKegiatan"></p>
+
+  <ul id="galeriKegiatan" class="file-list"></ul>
+</section>
+
+<!-- ================= PTK ================= -->
+<section class="page hidden" id="ptk">
+  <h3>📁 FILE BERKAS PTK</h3>
+
+  <input type="file" id="filePTK" accept="image/*,application/pdf">
+
+  <button onclick="uploadDrive('PTK','filePTK',null,'statusPTK')">⬆ Upload File</button>
+
+  <p id="statusPTK"></p>
+
+  <ul id="listPTK" class="file-list"></ul>
+</section>
+
+</div>
+
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d47a1">
+
+<script src="script.js"></script>
+</body>
+</html>
