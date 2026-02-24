@@ -236,105 +236,52 @@ this.classList.add("active");
 });
 });
 
-/* ================= CAMERA ANDROID FIX ================= */
-
-let currentStream = null;
-let cameraReady = false;
-
-/* OPEN CAMERA */
-async function openCamera(videoId){
-
+/******************************
+ CAMERA
+******************************/
+async function openCamera(videoId) {
   const video = document.getElementById(videoId);
 
-  if(!video){
-    alert("Video element tidak ditemukan");
+  if (!navigator.mediaDevices?.getUserMedia) {
+    alert("❌ Browser tidak mendukung kamera");
     return;
   }
 
-  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-    alert("Browser / WebView tidak support kamera");
-    return;
-  }
-
-  // stop kamera lama jika ada
-  stopCamera();
-
-  try{
-
-    const constraints = {
-      video:{
-        facingMode:"environment", // kamera belakang
-        width:{ ideal:1280 },
-        height:{ ideal:720 }
-      },
-      audio:false
-    };
-
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" },
+      audio: false
+    });
 
     video.srcObject = stream;
-    currentStream = stream;
+    video.playsInline = true;
+    await video.play();
 
-    video.onloadedmetadata = ()=>{
-      video.play();
-      cameraReady = true;
-    };
-
-  }catch(err){
-
-    console.log("Primary camera error:",err);
-
-    // fallback kalau environment gagal
-    try{
-      const stream = await navigator.mediaDevices.getUserMedia({video:true});
-      video.srcObject = stream;
-      currentStream = stream;
-      cameraReady = true;
-    }catch(e){
-      alert("❌ Kamera tidak bisa dibuka.\nPastikan HTTPS / Permission aktif.");
-    }
-
+  } catch {
+    alert("❌ Kamera gagal dibuka. Izinkan kamera di browser.");
   }
-
 }
 
-/* TAKE PHOTO */
-function takePhoto(videoId,previewId){
-
+/******************************
+ TAKE PHOTO
+******************************/
+function takePhoto(videoId, previewId) {
   const video = document.getElementById(videoId);
   const preview = document.getElementById(previewId);
 
-  if(!cameraReady){
-    alert("Kamera belum siap");
-    return;
-  }
-
-  if(!video || !preview){
-    alert("Element tidak lengkap");
+  if (!video.srcObject) {
+    alert("❌ Kamera belum aktif");
     return;
   }
 
   const canvas = document.createElement("canvas");
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
+  canvas.width = video.videoWidth || 640;
+  canvas.height = video.videoHeight || 480;
 
   const ctx = canvas.getContext("2d");
-  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  const imageData = canvas.toDataURL("image/png");
-
-  preview.src = imageData;
-
-  stopCamera();
-}
-
-/* STOP CAMERA */
-function stopCamera(){
-  if(currentStream){
-    currentStream.getTracks().forEach(track=>track.stop());
-    currentStream = null;
-  }
-  cameraReady = false;
+  preview.src = canvas.toDataURL("image/png");
+  preview.style.display = "block";
 }
 
