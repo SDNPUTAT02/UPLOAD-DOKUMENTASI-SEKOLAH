@@ -236,54 +236,105 @@ this.classList.add("active");
 });
 });
 
-/* ================= CAMERA ================= */
+/* ================= CAMERA ANDROID FIX ================= */
 
 let currentStream = null;
+let cameraReady = false;
 
-async function openCamera(videoId) {
+/* OPEN CAMERA */
+async function openCamera(videoId){
+
   const video = document.getElementById(videoId);
-  if (!video) {
+
+  if(!video){
     alert("Video element tidak ditemukan");
     return;
   }
 
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: { ideal: "environment" } // kamera belakang
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    alert("Browser / WebView tidak support kamera");
+    return;
+  }
+
+  // stop kamera lama jika ada
+  stopCamera();
+
+  try{
+
+    const constraints = {
+      video:{
+        facingMode:"environment", // kamera belakang
+        width:{ ideal:1280 },
+        height:{ ideal:720 }
       },
-      audio: false
-    });
+      audio:false
+    };
+
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     video.srcObject = stream;
     currentStream = stream;
 
-  } catch (err) {
-    alert("❌ Kamera tidak bisa dibuka: " + err.message);
+    video.onloadedmetadata = ()=>{
+      video.play();
+      cameraReady = true;
+    };
+
+  }catch(err){
+
+    console.log("Primary camera error:",err);
+
+    // fallback kalau environment gagal
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({video:true});
+      video.srcObject = stream;
+      currentStream = stream;
+      cameraReady = true;
+    }catch(e){
+      alert("❌ Kamera tidak bisa dibuka.\nPastikan HTTPS / Permission aktif.");
+    }
+
   }
+
 }
 
-function takePhoto(videoId, previewId) {
+/* TAKE PHOTO */
+function takePhoto(videoId,previewId){
+
   const video = document.getElementById(videoId);
   const preview = document.getElementById(previewId);
 
-  if (!video || !preview) {
+  if(!cameraReady){
+    alert("Kamera belum siap");
+    return;
+  }
+
+  if(!video || !preview){
     alert("Element tidak lengkap");
     return;
   }
 
   const canvas = document.createElement("canvas");
+
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 
   const ctx = canvas.getContext("2d");
-  ctx.drawImage(video, 0, 0);
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
 
   const imageData = canvas.toDataURL("image/png");
+
   preview.src = imageData;
 
-  // Matikan kamera setelah ambil foto
-  if (currentStream) {
-    currentStream.getTracks().forEach(track => track.stop());
-  }
+  stopCamera();
 }
+
+/* STOP CAMERA */
+function stopCamera(){
+  if(currentStream){
+    currentStream.getTracks().forEach(track=>track.stop());
+    currentStream = null;
+  }
+  cameraReady = false;
+}
+
