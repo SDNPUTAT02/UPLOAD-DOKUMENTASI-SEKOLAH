@@ -1,18 +1,49 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const listUpload = document.getElementById("listUpload");
-  if (!listUpload) return;
+/******************************
+ RIWAYAT PAGE - CLEAN VERSION
+******************************/
 
-  const saved = localStorage.getItem("listUpload");
+const $ = id => document.getElementById(id);
 
-  listUpload.innerHTML = saved && saved.trim() !== ""
-    ? saved
-    : "<li>📭 Belum ada riwayat upload</li>";
+/* ================= LOAD RIWAYAT ================= */
+function renderRiwayat(){
+
+let data = JSON.parse(localStorage.getItem("riwayatData")) || [];
+
+const list = $("listRiwayat");
+if(!list) return;
+
+list.innerHTML = "";
+
+if(data.length === 0){
+list.innerHTML = "<li style='text-align:center'>Belum ada riwayat upload</li>";
+return;
+}
+
+data.forEach(item=>{
+list.innerHTML += `
+<li>
+📌 ${item.menu}<br>
+🕒 ${item.waktu}<br>
+📄 ${item.nama}
+</li>`;
 });
 
-function hapusRiwayat() {
-  if (confirm("Hapus semua riwayat upload?")) {
-    localStorage.removeItem("listUpload");
-    document.getElementById("listUpload").innerHTML =
-      "<li>📭 Riwayat dikosongkan</li>";
-  }
 }
+
+/* ================= HAPUS ================= */
+function hapusRiwayat(){
+
+if(confirm("Yakin hapus semua riwayat?")){
+
+localStorage.removeItem("riwayatData");
+
+renderRiwayat();
+
+alert("Riwayat berhasil dihapus");
+}
+}
+
+/* ================= AUTO LOAD ================= */
+document.addEventListener("DOMContentLoaded",()=>{
+renderRiwayat();
+});
