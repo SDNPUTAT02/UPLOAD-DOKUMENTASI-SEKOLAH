@@ -235,3 +235,55 @@ document.querySelectorAll(".menu button")
 this.classList.add("active");
 });
 });
+
+/* ================= CAMERA ================= */
+
+let currentStream = null;
+
+async function openCamera(videoId) {
+  const video = document.getElementById(videoId);
+  if (!video) {
+    alert("Video element tidak ditemukan");
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: "environment" } // kamera belakang
+      },
+      audio: false
+    });
+
+    video.srcObject = stream;
+    currentStream = stream;
+
+  } catch (err) {
+    alert("❌ Kamera tidak bisa dibuka: " + err.message);
+  }
+}
+
+function takePhoto(videoId, previewId) {
+  const video = document.getElementById(videoId);
+  const preview = document.getElementById(previewId);
+
+  if (!video || !preview) {
+    alert("Element tidak lengkap");
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0);
+
+  const imageData = canvas.toDataURL("image/png");
+  preview.src = imageData;
+
+  // Matikan kamera setelah ambil foto
+  if (currentStream) {
+    currentStream.getTracks().forEach(track => track.stop());
+  }
+}
