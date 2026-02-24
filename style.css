@@ -9,6 +9,9 @@ body {
   min-height: 100vh;
   background: linear-gradient(145deg, #cfe9ff, #f7fbff);
   color: #1f2937;
+
+  /* RUANG UNTUK BOTTOM NAV */
+  padding-bottom: 110px;
 }
 
 /* ===== GLASS EFFECT BASE ===== */
@@ -27,9 +30,6 @@ body {
   border-radius: 20px;
   text-align: center;
   animation: fadeUp .6s ease;
-}
-
-.login-box {
   background: rgba(255,255,255,0.75);
   backdrop-filter: blur(18px);
 }
@@ -50,7 +50,7 @@ body {
 }
 
 .login-box input:focus {
-  border-color: #2196f3;
+  border-color: #1492fa;
   box-shadow: 0 0 0 4px rgba(33,150,243,0.18);
 }
 
@@ -109,33 +109,57 @@ header {
   transform: scale(1.03);
 }
 
-/* ===== MENU BOTTOM MOBILE ===== */
+/* ===== ANDROID STYLE FLOATING BOTTOM NAV ===== */
 .menu {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 500px;
+  height: 70px;
   display: flex;
-  gap: 8px;
-  padding: 12px;
-  position: sticky;
-  bottom: 0;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(14px);
-  border-top: 1px solid rgba(255,255,255,0.6);
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  z-index: 1000;
 }
 
+/* MENU BUTTON */
 .menu button {
-  flex: 1;
-  padding: 5px;
-  border-radius: 16px;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
   border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1f2937;
+  transition: .25s;
+}
+
+.menu button span {
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+/* ACTIVE BUTTON */
+.menu button.active {
   background: linear-gradient(135deg, #2196f3, #0d47a1);
   color: white;
-  font-size: 10px;
-  font-weight: 700;
-  transition: .2s;
+  box-shadow: 0 6px 18px rgba(33,150,243,0.35);
 }
 
-.menu button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(33,150,243,0.35);
+.menu button:active {
+  transform: scale(.92);
 }
 
 /* ===== PAGE ===== */
@@ -251,7 +275,7 @@ video {
   }
 }
 
-
+/* ===== SPLASH ===== */
 #splash {
   position: fixed;
   inset: 0;
@@ -272,5 +296,3 @@ video {
 body.loaded #splash {
   display: none;
 }
-
-
