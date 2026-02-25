@@ -111,6 +111,14 @@ const preview=previewId?$(previewId)?.src:null;
 if(!file && !preview){
 status.innerText="❌ Pilih file dulu";
 return;
+const targetFolder = folderMap[menu];
+
+if(!targetFolder){
+alert("Folder tidak ditemukan untuk menu: " + menu);
+return;
+}
+
+console.log("Upload ke folder:", targetFolder);
 }
 
 status.innerText="";
@@ -295,6 +303,7 @@ function takePhoto(videoId, previewId) {
   preview.src = canvas.toDataURL("image/png");
   preview.style.display = "block";
 }
+
 
 
 
