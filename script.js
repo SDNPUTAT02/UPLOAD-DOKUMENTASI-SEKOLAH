@@ -6,7 +6,7 @@
 /* ================= CONFIG ================= */
 const ADMIN_USER="admin";
 const ADMIN_PASS="1234";
-const DRIVE_API="https://script.google.com/macros/s/AKfycbx0yF1mkrY_bAzGUwVeYL7WaqXYi_zfym9boLIFWLNbVWOKT6-TX40aHr_r4ZuESC33TQ/exec";
+const DRIVE_API="https://script.google.com/macros/s/AKfycbyBFfybe9Mnz4Ch456UuxVn50BMHbQvPAPl-HMdhgi74O9upZ_ZcSt-958VMC-nCUqTnw/exec";
 
 /* ================= ELEMENT ================= */
 const $=id=>document.getElementById(id);
@@ -304,6 +304,7 @@ function takePhoto(videoId, previewId) {
   preview.src = canvas.toDataURL("image/png");
   preview.style.display = "block";
 }
+
 
 
 
