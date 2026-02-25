@@ -6,7 +6,7 @@
 /* ================= CONFIG ================= */
 const ADMIN_USER="admin";
 const ADMIN_PASS="1234";
-const DRIVE_API="https://script.google.com/macros/s/AKfycbyBFfybe9Mnz4Ch456UuxVn50BMHbQvPAPl-HMdhgi74O9upZ_ZcSt-958VMC-nCUqTnw/exec";
+const DRIVE_API="https://script.google.com/macros/s/AKfycbzHraGwSCUprlaKvbU9jVvaosYxpUYuEgvbGHoyZ0F9wU5DX86CvrWLscKTYRKKlfA-NQ/exec";
 
 /* ================= ELEMENT ================= */
 const $=id=>document.getElementById(id);
@@ -211,8 +211,10 @@ function updateCount(){
 
 let data=JSON.parse(localStorage.getItem("riwayatData"))||[];
 
+const kategoriFoto = ["Tari","Pramuka","Hadroh","Kegiatan"];
+
 let foto=data.filter(d=>
-d.menu==="Ekstra"||d.menu==="Kegiatan"
+kategoriFoto.includes(d.menu)
 ).length;
 
 let file=data.filter(d=>
@@ -310,11 +312,39 @@ function uploadEkstra(){
   uploadDrive(kategori,'fileEkstra','previewEkstra','statusEkstra');
 }
 
+function loadStats(){
+
+fetch(DRIVE_API + "?action=stats")
+.then(r=>r.json())
+.then(data=>{
+
+const totalFotoReal =
+data.Tari +
+data.Pramuka +
+data.Hadroh +
+data.Kegiatan;
+
+const totalFileReal = data.PTK;
+
+totalFoto.innerText = totalFotoReal;
+totalFile.innerText = totalFileReal;
+
+updateChart(data);
+
+})
+.catch(()=>{
+console.log("Gagal ambil statistik");
+});
+}
 
 
+setInterval(loadStats, 10000); // refresh tiap 10 detik
 
-
-
+function showApp(){
+loginBox.classList.add("hidden");
+app.classList.remove("hidden");
+loadStats();
+}
 
 
 
