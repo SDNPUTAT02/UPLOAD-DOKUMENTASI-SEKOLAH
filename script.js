@@ -385,8 +385,43 @@ function updateChart(data){
 }
 
 
+let chart;
 
+function loadChart(foto, file){
+  const ctx = document.getElementById('chartUpload').getContext('2d');
 
+  if(chart){
+    chart.destroy(); // supaya tidak numpuk
+  }
+
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Foto', 'File'],
+      datasets: [{
+        label: 'Total Upload',
+        data: [foto, file],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{
+        y:{
+          beginAtZero:true
+        }
+      }
+    }
+  });
+}
+
+function updateDashboard(totalFoto,totalFile){
+  document.getElementById("totalFoto").innerText = totalFoto;
+  document.getElementById("totalFile").innerText = totalFile;
+
+  loadChart(totalFoto,totalFile);
+}
 
 
 
