@@ -23,7 +23,16 @@ const listPTK=$("listPTK");
 
 const totalFoto=$("totalFoto");
 const totalFile=$("totalFile");
-
+/******************************
+ FOLDER MAP
+******************************/
+const folderMap = {
+  Tari: "136X1CcQMwN8LKh_C6AaQXjTSd8_6FU7N",
+  Pramuka: "1dVPrGsL2DKmdK5ZzdV5AQe89UVN8CH7T",
+  Hadroh: "10wtuKAx-IuuzY25FS-zvq3MAq7R7zd_E",
+  Kegiatan: "11xLRGB1OIw80chaUJHn_NUNgbMnxYiP9",
+  PTK: "1HIzKu4XssoLgdCXQrBJiv_GYgpe6uJwj"
+};
 /* ================= LOGIN ================= */
 function login(){
 if(username.value.trim()===ADMIN_USER &&
@@ -284,4 +293,5 @@ function takePhoto(videoId, previewId) {
   preview.src = canvas.toDataURL("image/png");
   preview.style.display = "block";
 }
+
 
