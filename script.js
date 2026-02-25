@@ -28,11 +28,11 @@ const totalFile=$("totalFile");
  FOLDER MAP
 ******************************/
 const folderMap = {
-  Tari: "136X1CcQMwN8LKh_C6AaQXjTSd8_6FU7N",
-  Pramuka: "1dVPrGsL2DKmdK5ZzdV5AQe89UVN8CH7T",
-  Hadroh: "10wtuKAx-IuuzY25FS-zvq3MAq7R7zd_E",
-  Kegiatan: "11xLRGB1OIw80chaUJHn_NUNgbMnxYiP9",
-  PTK: "1HIzKu4XssoLgdCXQrBJiv_GYgpe6uJwj"
+  Tari: "1WBoVqfxcJBkPMVi9STBdgiy1gsKh6WoF",
+  Pramuka: "1y4dlkElZoIWFe937qVR9nVHe3SG5g6ki",
+  Hadroh: "1nMxjcWKhF_k9lt1M5Ra2DoSDA-442MbV",
+  Kegiatan: "19YpKhcaRVvaUgWolHNzsd-xIPORZ6CfE",
+  PTK: "1NJ5b1-Q-uc2iy2ExG4rxY-FRA3fe7I65"
 };
 
 /* ================= LOGIN ================= */
@@ -303,6 +303,7 @@ function takePhoto(videoId, previewId) {
   preview.src = canvas.toDataURL("image/png");
   preview.style.display = "block";
 }
+
 
 
 
