@@ -111,6 +111,7 @@ const preview=previewId?$(previewId)?.src:null;
 if(!file && !preview){
 status.innerText="❌ Pilih file dulu";
 return;
+}
 const targetFolder = folderMap[menu];
 
 if(!targetFolder){
@@ -119,8 +120,7 @@ return;
 }
 
 console.log("Upload ke folder:", targetFolder);
-}
-
+ 
 status.innerText="";
 showLoading();
 
@@ -130,7 +130,7 @@ const send=b64=>{
 fetch(DRIVE_API,{
 method:"POST",
 body:new URLSearchParams({
-folder:"auto",
+folder: folderMap[menu],
 filename:finalName,
 mime:file?file.type:"image/png",
 file:b64
@@ -303,6 +303,7 @@ function takePhoto(videoId, previewId) {
   preview.src = canvas.toDataURL("image/png");
   preview.style.display = "block";
 }
+
 
 
 
