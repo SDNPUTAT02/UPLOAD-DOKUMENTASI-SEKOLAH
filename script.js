@@ -23,6 +23,7 @@ const listPTK=$("listPTK");
 
 const totalFoto=$("totalFoto");
 const totalFile=$("totalFile");
+
 /******************************
  FOLDER MAP
 ******************************/
@@ -33,6 +34,7 @@ const folderMap = {
   Kegiatan: "11xLRGB1OIw80chaUJHn_NUNgbMnxYiP9",
   PTK: "1HIzKu4XssoLgdCXQrBJiv_GYgpe6uJwj"
 };
+
 /* ================= LOGIN ================= */
 function login(){
 if(username.value.trim()===ADMIN_USER &&
@@ -293,5 +295,6 @@ function takePhoto(videoId, previewId) {
   preview.src = canvas.toDataURL("image/png");
   preview.style.display = "block";
 }
+
 
 
