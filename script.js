@@ -38,13 +38,25 @@ const folderMap = {
 
 /* ================= LOGIN ================= */
 function login(){
-if(username.value.trim()===ADMIN_USER &&
-password.value.trim()===ADMIN_PASS){
-localStorage.setItem("isLoggedIn","true");
-showApp();
-}else{
-loginStatus.innerText="❌ Login gagal";
-}
+
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const loginStatus = document.getElementById("loginStatus");
+
+  if(
+    usernameInput.value.trim() === ADMIN_USER &&
+    passwordInput.value.trim() === ADMIN_PASS
+  ){
+
+    localStorage.setItem("isLoggedIn","true");
+
+    showApp();          // tampilkan aplikasi
+    initChart();        // hidupkan grafik
+    loadDashboard();    // ambil data real dari Drive
+
+  }else{
+    loginStatus.innerText = "❌ Login gagal";
+  }
 }
 
 function logout(){
@@ -424,5 +436,55 @@ function updateDashboard(totalFoto,totalFile){
 }
 
 
+let chartUpload = null;
+
+function initChart(){
+  const canvas = document.getElementById("chartUpload");
+
+  if(!canvas){
+    console.log("Canvas tidak ditemukan");
+    return;
+  }
+
+  const ctx = canvas.getContext("2d");
+
+  chartUpload = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Foto", "File"],
+      datasets: [{
+        label: "Total Upload",
+        data: [0,0],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales:{
+        y:{
+          beginAtZero:true
+        }
+      }
+    }
+  });
+}
+
+function updateChart(totalFoto, totalFile){
+  if(!chartUpload){
+    console.log("Chart belum dibuat");
+    return;
+  }
+
+  chartUpload.data.datasets[0].data = [totalFoto, totalFile];
+  chartUpload.update();
+}
 
 
+window.onload = function(){
+  if(localStorage.getItem("isLoggedIn") === "true"){
+    showApp();
+    initChart();
+    loadDashboard();
+  }
+}
