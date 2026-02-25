@@ -351,42 +351,39 @@ let chart;
 
 function updateChart(data){
 
-const ctx = document.getElementById("chartUpload");
+  const ctx = document.getElementById("chartUpload");
 
-if(chart){
-  chart.destroy();
-}
+  if(!ctx) return;
 
-chart = new Chart(ctx,{
-  type:"bar",
-  data:{
-    labels:["Tari","Pramuka","Hadroh","Kegiatan","PTK"],
-    datasets:[{
-      label:"Jumlah File",
-      data:[
-        data.Tari,
-        data.Pramuka,
-        data.Hadroh,
-        data.Kegiatan,
-        data.PTK
-      ],
-      borderRadius:8
-    }]
-  },
-  options:{
-    responsive:true,
-    maintainAspectRatio:false, /* WAJIB false */
-    plugins:{
-      legend:{ display:false }
+  if(chart){
+    chart.destroy();
+  }
+
+  chart = new Chart(ctx.getContext("2d"),{
+    type:"bar",
+    data:{
+      labels:["Tari","Pramuka","Hadroh","Kegiatan","PTK"],
+      datasets:[{
+        label:"Jumlah File",
+        data:[
+          data.Tari || 0,
+          data.Pramuka || 0,
+          data.Hadroh || 0,
+          data.Kegiatan || 0,
+          data.PTK || 0
+        ]
+      }]
     },
-    scales:{
-      y:{
-        beginAtZero:true
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{
+        y:{ beginAtZero:true }
       }
     }
-  }
-});
+  });
 }
+
 
 
 
