@@ -305,6 +305,10 @@ function takePhoto(videoId, previewId) {
   preview.style.display = "block";
 }
 
+function uploadEkstra(){
+  const kategori = document.getElementById("kategoriEkstra").value;
+  uploadDrive(kategori,'fileEkstra','previewEkstra','statusEkstra');
+}
 
 
 
