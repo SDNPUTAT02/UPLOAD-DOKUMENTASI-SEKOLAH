@@ -55,7 +55,7 @@ location.reload();
 function showApp(){
 loginBox.classList.add("hidden");
 app.classList.remove("hidden");
-loadData();
+loadStats();
 }
 
 function showLogin(){
@@ -387,6 +387,7 @@ chart = new Chart(ctx,{
   }
 });
 }
+
 
 
 
