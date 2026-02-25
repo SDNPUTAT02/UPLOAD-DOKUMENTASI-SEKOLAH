@@ -467,11 +467,3 @@ function updateChart(totalFoto, totalFile){
 }
 
 
-window.onload = function(){
-  if(localStorage.getItem("isLoggedIn") === "true"){
-    showApp();
-    initChart();
-    loadDashboard();
-  }
-}
-
