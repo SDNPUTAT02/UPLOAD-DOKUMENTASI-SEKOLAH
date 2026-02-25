@@ -50,29 +50,15 @@ function login(){
 
     localStorage.setItem("isLoggedIn","true");
 
-    showApp();          // tampilkan aplikasi
-    initChart();        // hidupkan grafik
-    loadDashboard();    // ambil data real dari Drive
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+
+    // Jangan panggil grafik dulu untuk tes login
+    console.log("Login berhasil");
 
   }else{
     loginStatus.innerText = "❌ Login gagal";
   }
-}
-
-function logout(){
-localStorage.removeItem("isLoggedIn");
-location.reload();
-}
-
-function showApp(){
-loginBox.classList.add("hidden");
-app.classList.remove("hidden");
-loadStats();
-}
-
-function showLogin(){
-loginBox.classList.remove("hidden");
-app.classList.add("hidden");
 }
 
 /* ================= INIT ================= */
@@ -488,3 +474,4 @@ window.onload = function(){
     loadDashboard();
   }
 }
+
