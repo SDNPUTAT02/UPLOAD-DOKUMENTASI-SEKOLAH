@@ -347,6 +347,46 @@ loadStats();
 }
 
 
+let chart;
+
+function updateChart(data){
+
+const ctx = document.getElementById("chartUpload");
+
+if(chart){
+  chart.destroy();
+}
+
+chart = new Chart(ctx,{
+  type:"bar",
+  data:{
+    labels:["Tari","Pramuka","Hadroh","Kegiatan","PTK"],
+    datasets:[{
+      label:"Jumlah File",
+      data:[
+        data.Tari,
+        data.Pramuka,
+        data.Hadroh,
+        data.Kegiatan,
+        data.PTK
+      ],
+      borderRadius:8
+    }]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false, /* WAJIB false */
+    plugins:{
+      legend:{ display:false }
+    },
+    scales:{
+      y:{
+        beginAtZero:true
+      }
+    }
+  }
+});
+}
 
 
 
