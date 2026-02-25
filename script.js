@@ -36,29 +36,35 @@ const folderMap = {
   Ekstra: "1q4n9K8XBJ0bWabY1gtgMZhdVCumjfVp4"
 };
 
-/* ================= LOGIN ================= */
-function login(){
+/******************************
+ LOGIN SYSTEM
+******************************/
+function login() {
+  const u = username.value.trim();
+  const p = password.value.trim();
 
-  const usernameInput = document.getElementById("username");
-  const passwordInput = document.getElementById("password");
-  const loginStatus = document.getElementById("loginStatus");
-
-  if(
-    usernameInput.value.trim() === ADMIN_USER &&
-    passwordInput.value.trim() === ADMIN_PASS
-  ){
-
-    localStorage.setItem("isLoggedIn","true");
-
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
-
-    // Jangan panggil grafik dulu untuk tes login
-    console.log("Login berhasil");
-
-  }else{
-    loginStatus.innerText = "❌ Login gagal";
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    localStorage.setItem("isLoggedIn", "true");
+    showApp();
+    loadData();
+  } else {
+    loginStatus.innerText = "❌ Username atau Password salah!";
   }
+}
+
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  location.reload();
+}
+
+function showApp() {
+  loginBox.classList.add("hidden");
+  app.classList.remove("hidden");
+}
+
+function showLogin() {
+  loginBox.classList.remove("hidden");
+  app.classList.add("hidden");
 }
 
 /* ================= INIT ================= */
@@ -465,5 +471,6 @@ function updateChart(totalFoto, totalFile){
   chartUpload.data.datasets[0].data = [totalFoto, totalFile];
   chartUpload.update();
 }
+
 
 
