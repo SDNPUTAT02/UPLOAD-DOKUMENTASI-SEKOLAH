@@ -33,7 +33,7 @@ const folderMap = {
   Hadroh: "1nMxjcWKhF_k9lt1M5Ra2DoSDA-442MbV",
   Kegiatan: "19YpKhcaRVvaUgWolHNzsd-xIPORZ6CfE",
   PTK: "1NJ5b1-Q-uc2iy2ExG4rxY-FRA3fe7I65",
-  Ekstra: "1-IpJoPcbZKUEVAwkQbsA88Ygu0Cco1Zr"
+  EKSTRA: "1-IpJoPcbZKUEVAwkQbsA88Ygu0Cco1Zr"
 };
 
 /* ================= LOGIN ================= */
@@ -304,6 +304,7 @@ function takePhoto(videoId, previewId) {
   preview.src = canvas.toDataURL("image/png");
   preview.style.display = "block";
 }
+
 
 
 
